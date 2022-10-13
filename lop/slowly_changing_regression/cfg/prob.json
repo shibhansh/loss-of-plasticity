@@ -1,0 +1,24 @@
+{
+"model_version": "Generates the data",
+
+  "_comment_1_": "List of problem/experiment parameters",
+  "gen_prob_data": true,
+  "num_runs":  100,
+  "num_inputs": 20,
+  "num_data_points": 1e7,
+  "data_dir": "",
+  "env_data_dir": "data/env_data/scr/",
+  "flip_after": 10000,
+  "num_target_features": 100,
+  "num_flipping_bits": 15,
+  "beta": 0.7,
+
+  "_comment_2_": "Learner parameters",
+  "agent": "bp",
+  "num_features": 5,
+  "hidden_activation": "relu",
+  "opt": "sgd",
+  "step_size": 0,
+  "replacement_rate": 0,
+  "decay_rate": 0
+}
