@@ -29,7 +29,7 @@ def main(arguments):
     parser.add_argument('-c', help="Path of the file containing the parameters of the experiment", type=str,
                             default='../cfg/sgd/bp/relu.json')
     args = parser.parse_args(arguments)
-    cfg_file = args.cfg_file
+    cfg_file = args.c
 
     with open(cfg_file, 'r') as f:
         params = json.load(f)

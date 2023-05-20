@@ -24,6 +24,8 @@ This command produces 100 temporary cfg files in `temp_cfg`.
 python3.8 multi_param_expr.py -c cfg/sgd/bp/relu.json 
 ```
 
+To test continual backprop, use a different cfg file, like `cfg/sgd/cbp/relu.json`
+
 Each of the new temporary cfg files can then be used to do one run of backprop.
 ```sh
 python3.8 expr.py -c temp_cfg/0.json 

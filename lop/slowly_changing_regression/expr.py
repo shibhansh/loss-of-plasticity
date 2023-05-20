@@ -5,6 +5,7 @@ import argparse
 from lop.nets.ffnn import FFNN
 from lop.nets.linear import MyLinear
 from lop.algos.bp import Backprop
+from lop.algos.cbp import ContinualBackprop
 from lop.utils.miscellaneous import *
 
 
@@ -18,6 +19,7 @@ def expr(params: {}):
     beta_1 = 0.9
     beta_2 = 0.999
     weight_decay = 0.0
+    accumulate = False
     perturb_scale = 0
     if 'to_log' in params.keys():
         to_log = params['to_log']
@@ -31,6 +33,8 @@ def expr(params: {}):
         beta_2 = params['beta_2']
     if 'weight_decay' in params.keys():
         weight_decay = params['weight_decay']
+    if 'accumulate' in params.keys():
+        accumulate = params['accumulate']
     if 'perturb_scale' in params.keys():
         perturb_scale = params['perturb_scale']
 
@@ -39,6 +43,17 @@ def expr(params: {}):
     hidden_activation = params['hidden_activation']
     step_size = params['step_size']
     opt = params['opt']
+    replacement_rate = params["replacement_rate"]
+    decay_rate = params["decay_rate"]
+    mt = 10
+    util_type='adaptable_contribution'
+    init = 'kaiming'
+    if "mt" in params.keys():
+        mt = params["mt"]
+    if "util_type" in params.keys():
+        util_type = params["util_type"]
+    if "init" in params.keys():
+        init = params["init"]
 
     if agent_type == 'linear':
         net = MyLinear(
@@ -61,6 +76,19 @@ def expr(params: {}):
             weight_decay=weight_decay,
             to_perturb=(perturb_scale > 0),
             perturb_scale=perturb_scale,
+        )
+    elif agent_type == 'cbp':
+        learner = ContinualBackprop(
+            net=net,
+            step_size=step_size,
+            opt=opt,
+            replacement_rate=replacement_rate,
+            decay_rate=decay_rate,
+            device='cpu',
+            maturity_threshold=mt,
+            util_type=util_type,
+            init=init,
+            accumulate=accumulate,
         )
 
     with open(env_file, 'rb+') as f:
