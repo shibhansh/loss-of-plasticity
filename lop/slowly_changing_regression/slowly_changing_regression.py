@@ -14,7 +14,8 @@ def generate_problem_data(
         num_inputs=20,
         num_target_features=20,
         num_flipping_bits=None,
-        beta=0.75
+        beta=0.75,
+        flip_one=False,
 ):
     """
     Generates data for one run on the slowly changing regression problem
@@ -29,6 +30,12 @@ def generate_problem_data(
     num_data_points = num_flips * flip_after
     flipping_bits = torch.randint(2, size=(num_flips, num_flipping_bits), dtype=torch.float32)
     if num_flipping_bits > 0:
+        if flip_one:
+            for i in range(1, num_flips):
+                flipping_bits[i] = flipping_bits[i-1]
+                bit_to_flip = torch.randint(num_flipping_bits, (1, ))
+                flipping_bits[i][bit_to_flip] = 1 - flipping_bits[i-1][bit_to_flip]
+
         flipping_bits = flipping_bits.repeat_interleave(flip_after, dim=0)
         random_bits = torch.randint(2, size=(num_data_points, num_inputs - num_flipping_bits), dtype=torch.float32)
 
@@ -67,6 +74,8 @@ def main(arguments):
         params['target_net_file'] = None
     if 'add_noise' not in params.keys():
         params['add_noise'] = True
+    if 'flip_one' not in params.keys():
+        params['flip_one'] = False
 
     generate_problem_data(
         data_file=params['env_file'],
@@ -75,7 +84,8 @@ def main(arguments):
         num_inputs=params['num_inputs'],
         num_target_features=params['num_target_features'],
         num_flipping_bits=params['num_flipping_bits'],
-        beta=params['beta']
+        beta=params['beta'],
+        flip_one=params['flip_one'],
     )
 
 
