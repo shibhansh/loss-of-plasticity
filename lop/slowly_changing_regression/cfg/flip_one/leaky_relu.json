@@ -1,0 +1,26 @@
+{
+"model_version": "",
+
+  "_comment_1_": "List of problem/experiment parameters",
+  "gen_prob_data": false,
+  "num_runs":  100,
+  "num_inputs": 20,
+  "num_data_points": 3e6,
+  "data_dir": "data/flip_one/leaky_relu/",
+  "env_data_dir": "data/env_data/flip_one_scr/",
+  "flip_after": 10000,
+  "num_target_features": 100,
+  "num_flipping_bits": 15,
+  "to_log_features": false,
+  "beta": 0.7,
+  "flip_one": true,
+
+  "_comment_2_": "Learner parameters",
+  "agent": "bp",
+  "num_features": 5,
+  "hidden_activation": "leaky_relu",
+  "opt": "sgd",
+  "step_size": [0.01, 0.003, 0.001],
+  "replacement_rate": 0,
+  "decay_rate": 0
+}
