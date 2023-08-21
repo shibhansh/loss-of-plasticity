@@ -7,6 +7,7 @@ import numpy as np
 from tqdm import tqdm
 from lop.algos.bp import Backprop
 from lop.nets.conv_net import ConvNet
+from lop.algos.convCBP import ConvCBP
 from torch.nn.functional import softmax
 from lop.nets.linear import MyLinear
 from lop.utils.miscellaneous import nll_accuracy as accuracy
@@ -43,6 +44,10 @@ def repeat_expr(params: {}):
     num_showings = params['num_showings']
 
     step_size = params['step_size']
+    replacement_rate = params['replacement_rate']
+    decay_rate = params['decay_rate']
+    maturity_threshold = 100
+    util_type = 'contribution'
     opt = params['opt']
     weight_decay = 0
     use_gpu = 0
@@ -53,6 +58,10 @@ def repeat_expr(params: {}):
     mini_batch_size = 100
     perturb_scale = 0
     momentum = 0
+    if 'util_type' in params.keys():
+        util_type = params['util_type']
+    if 'maturity_threshold' in params.keys():
+        maturity_threshold = params['maturity_threshold']
     if 'weight_decay' in params.keys():
         weight_decay = params['weight_decay']
     if 'use_gpu' in params.keys():
@@ -90,6 +99,20 @@ def repeat_expr(params: {}):
             perturb_scale=perturb_scale,
             device=dev,
             momentum=momentum,
+        )
+    elif agent_type == 'cbp':
+        learner = ConvCBP(
+            net=net,
+            step_size=step_size,
+            momentum=momentum,
+            loss='nll',
+            weight_decay=weight_decay,
+            opt=opt,
+            replacement_rate=replacement_rate,
+            decay_rate=decay_rate,
+            util_type=util_type,
+            device=dev,
+            maturity_threshold=maturity_threshold,
         )
 
     with open('class_order', 'rb+') as f:

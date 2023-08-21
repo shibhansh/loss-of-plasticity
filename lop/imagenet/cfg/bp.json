@@ -1,0 +1,19 @@
+{
+"model_version": "2 classes, 2k tasks, 250 epochs, SGD with momentum, 30 runs",
+
+  "_comment_1_": "List of problem/experiment parameters",
+  "num_runs":  30,
+  "num_tasks": 2000,
+  "num_classes": 2,
+  "data_dir": "data/bp/",
+  "num_showings": 250,
+  "use_gpu": 1,
+  "mini_batch_size": 100,
+
+  "_comment_2_": "Learner parameters",
+  "agent": "bp",
+  "opt": "sgd",
+  "step_size": [0.01, 0.001, 0.0001],
+  "momentum": 0.9,
+  "weight_decay": 0
+}

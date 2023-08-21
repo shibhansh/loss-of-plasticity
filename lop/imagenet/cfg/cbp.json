@@ -1,0 +1,22 @@
+{
+"model_version": "2 classes, 5k tasks, 250 epochs, SGD with momentum using CBP, 30 runs",
+
+  "_comment_1_": "List of problem/experiment parameters",
+  "num_runs":  30,
+  "num_tasks": 5000,
+  "num_classes": 2,
+  "data_dir": "data/cbp/",
+  "num_showings": 250,
+  "use_gpu": 1,
+  "mini_batch_size": 100,
+
+  "_comment_2_": "Learner parameters",
+  "agent": "cbp",
+  "opt": "sgd",
+  "step_size": 0.01,
+  "momentum": 0.9,
+  "util_type": "adaptable_contribution",
+  "replacement_rate": 3e-4,
+  "maturity_threshold": 1e3,
+  "decay_rate": 0.99
+}
