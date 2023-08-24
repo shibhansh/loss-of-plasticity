@@ -2,8 +2,8 @@ import sys
 import json
 import pickle
 import argparse
-from cbp.utils.miscellaneous import *
-from cbp.utils.plot_online_performance import generate_online_performance_plot
+from lop.utils.miscellaneous import *
+from lop.utils.plot_online_performance import generate_online_performance_plot
 
 
 def add_cfg_performance(cfg='', setting_idx=0, m=2*10*1000, num_runs=30):
