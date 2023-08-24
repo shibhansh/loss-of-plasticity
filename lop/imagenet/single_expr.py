@@ -44,8 +44,8 @@ def repeat_expr(params: {}):
     num_showings = params['num_showings']
 
     step_size = params['step_size']
-    replacement_rate = params['replacement_rate']
-    decay_rate = params['decay_rate']
+    replacement_rate = 0.0001
+    decay_rate = 0.99
     maturity_threshold = 100
     util_type = 'contribution'
     opt = params['opt']
@@ -58,27 +58,21 @@ def repeat_expr(params: {}):
     mini_batch_size = 100
     perturb_scale = 0
     momentum = 0
-    if 'util_type' in params.keys():
-        util_type = params['util_type']
-    if 'maturity_threshold' in params.keys():
-        maturity_threshold = params['maturity_threshold']
-    if 'weight_decay' in params.keys():
-        weight_decay = params['weight_decay']
+    if 'replacement_rate' in params.keys(): replacement_rate = params['replacement_rate']
+    if 'decay_rate' in params.keys(): decay_rate = params['decay_rate']
+    if 'util_type' in params.keys(): util_type = params['util_type']
+    if 'maturity_threshold' in params.keys():   maturity_threshold = params['maturity_threshold']
+    if 'weight_decay' in params.keys(): weight_decay = params['weight_decay']
     if 'use_gpu' in params.keys():
         if params['use_gpu'] == 1:
             use_gpu = 1
             dev = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
             if dev == torch.device("cuda"):    torch.set_default_tensor_type('torch.cuda.FloatTensor')
-    if 'num_classes' in params.keys():
-        num_classes = params['num_classes']
-    if 'new_heads' in params.keys():
-        new_heads = params['new_heads']
-    if 'mini_batch_size' in params.keys():
-        mini_batch_size = params['mini_batch_size']
-    if 'perturb_scale' in params.keys():
-        perturb_scale = params['perturb_scale']
-    if 'momentum' in params.keys():
-        momentum = params['momentum']
+    if 'num_classes' in params.keys():  num_classes = params['num_classes']
+    if 'new_heads' in params.keys():    new_heads = params['new_heads']
+    if 'mini_batch_size' in params.keys():  mini_batch_size = params['mini_batch_size']
+    if 'perturb_scale' in params.keys():    perturb_scale = params['perturb_scale']
+    if 'momentum' in params.keys(): momentum = params['momentum']
     num_epochs = num_showings
 
     classes_per_task = num_classes
@@ -108,6 +102,7 @@ def repeat_expr(params: {}):
             loss='nll',
             weight_decay=weight_decay,
             opt=opt,
+            init='default',
             replacement_rate=replacement_rate,
             decay_rate=decay_rate,
             util_type=util_type,

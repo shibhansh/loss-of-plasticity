@@ -5,7 +5,7 @@
   "num_runs":  30,
   "num_tasks": 5000,
   "num_classes": 2,
-  "data_dir": "data/bp/",
+  "data_dir": "data/l2/",
   "num_showings": 250,
   "use_gpu": 1,
   "mini_batch_size": 100,

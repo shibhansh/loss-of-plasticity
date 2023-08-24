@@ -17,6 +17,6 @@
   "momentum": 0.9,
   "util_type": "adaptable_contribution",
   "replacement_rate": 3e-4,
-  "maturity_threshold": 1e3,
+  "maturity_threshold": 100,
   "decay_rate": 0.99
 }
