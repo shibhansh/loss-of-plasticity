@@ -4,7 +4,7 @@ In our forthcoming paper _Maintaining Plasticity in Deep Continual Learning_,
 we show the loss of plasticity in deep learning in these problems.
 
 A talk about this work can be found [here](https://www.youtube.com/watch?v=p_zknyfV9fY), 
-and a [previous version](https://arxiv.org/abs/2108.06325v3) of the paper is available on arxiv.
+and the [paper](https://arxiv.org/abs/2306.13812) is available on arxiv.
 
 # Installation
 
