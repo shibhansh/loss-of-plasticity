@@ -25,7 +25,7 @@ def add_cfg_performance(cfg='', setting_idx=0, m=2*10*1000, num_runs=30):
 def main(arguments):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--cfg_file', help="Path of the file containing the parameters of the experiment", type=str,
-                            default='cfg/bp/step_size.json')
+                            default='cfg/bp.json')
     args = parser.parse_args(arguments)
     cfg_file = args.cfg_file
 

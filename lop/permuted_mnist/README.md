@@ -28,9 +28,8 @@ cd plots
 python3.8 online_performance.py -c ../cfg/sgd/bp/std_net.json 
 ```
 
-The command above will generate the plot below.
+The command above will generate the plot on the left below.
 I have found the variance among individual runs to be surprisingly small.
 Just one run can be used for quick prototyping.
 
-
-![](plots/mnist_accuracy.jpeg "BP on Online Permuted MNIST")
+![](plots/mnist_accuracy.png "BP on Online Permuted MNIST")
