@@ -6,6 +6,7 @@ import argparse
 import numpy as np
 from tqdm import tqdm
 from lop.algos.bp import Backprop
+from lop.algos.cbp import ContinualBackprop
 from lop.nets.linear import MyLinear
 from torch.nn.functional import softmax
 from lop.nets.deep_ffnn import DeepFFNN
@@ -32,6 +33,11 @@ def online_expr(params: {}):
     perturb_scale = 0.1
     num_hidden_layers = 1
     mini_batch_size = 1
+    replacement_rate = 0.0001
+    decay_rate = 0.99
+    maturity_threshold = 100
+    util_type = 'adaptable_contribution'
+
     if 'to_log' in params.keys():
         to_log = params['to_log']
     if 'weight_decay' in params.keys():
@@ -53,6 +59,14 @@ def online_expr(params: {}):
         num_hidden_layers = params['num_hidden_layers']
     if 'mini_batch_size' in params.keys():
         mini_batch_size = params['mini_batch_size']
+    if 'replacement_rate' in params.keys():
+        replacement_rate = params['replacement_rate']
+    if 'decay_rate' in params.keys():
+        decay_rate = params['decay_rate']
+    if 'maturity_threshold' in params.keys():
+        maturity_threshold = params['mt']
+    if 'util_type' in params.keys():
+        util_type = params['util_type']
 
     classes_per_task = 10
     images_per_class = 6000
@@ -67,7 +81,7 @@ def online_expr(params: {}):
         )
         net.layers_to_log = []
 
-    if agent_type in ['bp', 'linear', 'normalized', "l2"]:
+    if agent_type in ['bp', 'linear', "l2"]:
         learner = Backprop(
             net=net,
             step_size=step_size,
@@ -77,6 +91,19 @@ def online_expr(params: {}):
             device=dev,
             to_perturb=to_perturb,
             perturb_scale=perturb_scale,
+        )
+    elif agent_type in ['cbp']:
+        learner = ContinualBackprop(
+            net=net,
+            step_size=step_size,
+            opt=opt,
+            loss='nll',
+            replacement_rate=replacement_rate,
+            maturity_threshold=maturity_threshold,
+            decay_rate=decay_rate,
+            util_type=util_type,
+            accumulate=True,
+            device=dev,
         )
 
     accuracy = nll_accuracy

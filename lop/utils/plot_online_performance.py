@@ -9,6 +9,7 @@ def generate_online_performance_plot(
         xticks=[],
         xticks_labels=None,
         yticks=[],
+        yticks_labels=None,
         m=20000,
         xlabel='',
         ylabel='',
@@ -50,6 +51,10 @@ def generate_online_performance_plot(
     ax.set_xticklabels(xticks_labels, fontsize=fontsize)
     if len(yticks) > 0:
         ax.set_yticks(yticks)
+        ax.set_ylim(yticks[0], yticks[-1])
+    if yticks_labels is not None:
+        ax.set_yticklabels(yticks_labels, fontsize=fontsize)
+    elif len(yticks) > 0:
         ax.set_yticklabels(yticks, fontsize=fontsize)
         ax.set_ylim(yticks[0], yticks[-1])
 

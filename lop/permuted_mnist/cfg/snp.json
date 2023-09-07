@@ -1,0 +1,20 @@
+{
+"model_version": "SnP on net with 3 hidden layer and 2000 hidden-units",
+
+  "_comment_1_": "List of problem/experiment parameters",
+  "num_runs":  10,
+  "num_tasks": 800,
+  "use_gpu": 1,
+  "data_dir": "data/snp/",
+  "to_log": true,
+
+  "_comment_2_": "Learner parameters",
+  "agent": "bp",
+  "opt": "sgd",
+  "num_features": 2000,
+  "num_hidden_layers": 3,
+  "step_size": 0.003,
+  "weight_decay": 1e-4,
+  "to_perturb": true,
+  "perturb_scale": [1e-4, 1e-5, 1e-6]
+}

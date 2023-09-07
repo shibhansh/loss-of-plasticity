@@ -1,0 +1,18 @@
+{
+"model_version": "BP on net with 3 hidden layer and 100 hidden-units",
+
+  "_comment_1_": "List of problem/experiment parameters",
+  "num_runs":  1,
+  "num_tasks": 800,
+  "use_gpu": 1,
+  "data_dir": "data/bp/small_net/",
+  "to_log": true,
+
+  "_comment_2_": "Learner parameters",
+  "agent": "bp",
+  "opt": "sgd",
+  "num_features": 100,
+  "num_hidden_layers": 3,
+  "step_size": [0.01, 0.003, 0.001],
+  "weight_decay": 0
+}

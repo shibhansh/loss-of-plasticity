@@ -1,11 +1,11 @@
 {
-"model_version": "BP on net with 3 hidden layer and 2000 hidden-units",
+"model_version": "L2 on net with 3 hidden layer and 2000 hidden-units",
 
   "_comment_1_": "List of problem/experiment parameters",
   "num_runs":  10,
   "num_tasks": 800,
   "use_gpu": 1,
-  "data_dir": "data/sgd/bp/std_net/",
+  "data_dir": "data/l2/",
   "to_log": true,
 
   "_comment_2_": "Learner parameters",
@@ -13,6 +13,6 @@
   "opt": "sgd",
   "num_features": 2000,
   "num_hidden_layers": 3,
-  "step_size": [0.01, 0.003, 0.001],
-  "weight_decay": 0
+  "step_size": 0.003,
+  "weight_decay": [1e-3, 1e-4, 1e-5]
 }
