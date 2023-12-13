@@ -15,6 +15,7 @@ from mlproj_manager.problems import CifarDataSet
 from mlproj_manager.experiments import Experiment
 from mlproj_manager.util import turn_off_debugging_processes, get_random_seeds, access_dict
 from mlproj_manager.util.data_preprocessing_and_transformations import ToTensor, Normalize, RandomCrop, RandomHorizontalFlip, RandomRotator
+from mlproj_manager.file_management.file_and_directory_management import store_object_with_several_attempts
 
 from lop.nets.torchvision_modified_resnet import build_resnet18, kaiming_init_resnet_module
 from lop.algos.res_gnt import ResGnT
@@ -55,6 +56,7 @@ class IncrementalCIFARExperiment(Experiment):
 
         """ Experiment parameters """
         self.data_path = exp_params["data_path"]
+        self.num_workers = access_dict(exp_params, key="num_workers", default=1, val_type=int)  # set to 1 when using cpu
 
         # optimization parameters
         self.stepsize = exp_params["stepsize"]
@@ -87,11 +89,7 @@ class IncrementalCIFARExperiment(Experiment):
         self.batch_sizes = {"train": 90, "test": 100, "validation":50}
         self.num_classes = 100
         self.image_dims = (32, 32, 3)
-        self.flat_image_dims = int(np.prod(self.image_dims))
-        self.num_images_per_epoch = 50000
-        self.num_test_samples = 10000
         self.num_images_per_class = 450
-        self.num_workers = 1 if self.device.type == "cpu" else 12       # for the data loader
 
         """ Network set up """
         # initialize network
@@ -473,14 +471,7 @@ class IncrementalCIFARExperiment(Experiment):
         file_name = "index-{0}_epoch-{1}.pt".format(self.run_index, self.current_epoch)
         file_path = os.path.join(model_parameters_dir_path, file_name)
 
-        attempts = 10
-        for i in range(attempts):
-            try:
-                torch.save(self.net.state_dict(), file_path)
-                torch.load(file_path)                           # check that parameters were stored correctly
-                break
-            except ValueError:
-                print("Something went wrong on attempt {0}! Attempting to store the parameters again...".format(i + 1))
+        store_object_with_several_attempts(self.net.state_dict(), file_path, storing_format="torch", num_attempts=10)
 
 
 def main():
