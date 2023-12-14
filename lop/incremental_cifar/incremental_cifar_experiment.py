@@ -3,6 +3,8 @@ import time
 import os
 import pickle
 from copy import deepcopy
+import json
+import argparse
 
 # third party libraries
 import torch
@@ -475,39 +477,33 @@ class IncrementalCIFARExperiment(Experiment):
 
 
 def main():
-    """
-    This is a quick demonstration of how to run the experiments. For a more systematic run, use the mlproj_manager
-    scheduler.
-    """
-    file_path = os.path.dirname(os.path.abspath(__file__))
-    experiment_parameters = {
-        "stepsize": 0.1,
-        "weight_decay": 0.0005,
-        "momentum": 0.9,
-        "noise_std": 0.0,
-        "data_path": os.path.join(file_path, "data"),
-        "reset_head": False,
-        "reset_network": False,
-        "use_data_augmentation": True,
-        "early_stopping": True,
-        "use_cbp": True,
-        "replacement_rate": 0.000001,
-        "utility_function": "weight",
-        "maturity_threshold": 1000
-    }
 
-    print(experiment_parameters)
-    relevant_parameters = ["stepsize", "weight_decay", "momentum", "noise_std", "reset_head", "reset_network",
-                           "early_stopping", "use_cbp", "replacement_rate"]
-    results_dir_name = "{0}-{1}".format(relevant_parameters[0], experiment_parameters[relevant_parameters[0]])
-    for relevant_param in relevant_parameters[1:]:
-        results_dir_name += "_" + relevant_param + "-" + str(experiment_parameters[relevant_param])
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--config', action="store", type=str,
+                        default='./lop/incremental_cifar/cfg/base_deep_learning_system.json',
+                        help="Path to the file containing the parameters for the experiment.")
+    parser.add_argument("--experiment-index", action="store", type=int, default=0,
+                        help="Index for the run; this will determine the random seed and the name of the results.")
+    parser.add_argument("--verbose", action="store_true", type=bool, default=False,
+                        help="Whether to print extra information about the experiment as it's running.")
+    args = parser.parse_args()
+
+    with open(args.config, 'r') as config_file:
+        experiment_parameters = json.load(config_file)
+
+    file_path = os.path.dirname(os.path.abspath(__file__))
+    if "data_path" not in experiment_parameters.keys() or experiment_parameters["data_path"] == "":
+        experiment_parameters["data_path"] = os.path.join(file_path, "data")
+    if "results_dir" not in experiment_parameters.keys() or experiment_parameters["results_dir"] == "":
+        experiment_parameters["results_dir"] = os.path.join(file_path, "results")
+    if "experiment_name" not in experiment_parameters.keys() or experiment_parameters["experiment_name"] == "":
+        experiment_parameters["experiment_name"] = os.path.splitext(os.path.basename(args.config_file))
 
     initial_time = time.perf_counter()
     exp = IncrementalCIFARExperiment(experiment_parameters,
-                                     results_dir=os.path.join(file_path, "results", results_dir_name),
-                                     run_index=0,
-                                     verbose=True)
+                                     results_dir=os.path.join(experiment_parameters["results_dir"], experiment_parameters["experiment_name"]),
+                                     run_index=args.experiment_index,
+                                     verbose=args.verbose)
     exp.run()
     exp.store_results()
     final_time = time.perf_counter()
