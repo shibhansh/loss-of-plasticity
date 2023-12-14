@@ -31,9 +31,9 @@ def subsample_cifar_data_set(sub_sample_indices, cifar_data: CifarDataSet):
     :return: None, but modifies the given cifar_dataset
     """
 
-    cifar_data.data["data"] = cifar_data.data["data"][sub_sample_indices]
-    cifar_data.data["labels"] = cifar_data.data["labels"][sub_sample_indices]
-    cifar_data.integer_labels = torch.tensor(cifar_data.integer_labels)[sub_sample_indices].tolist()
+    cifar_data.data["data"] = cifar_data.data["data"][sub_sample_indices.numpy()]       # .numpy wasn't necessary with torch 2.0
+    cifar_data.data["labels"] = cifar_data.data["labels"][sub_sample_indices.numpy()]
+    cifar_data.integer_labels = torch.tensor(cifar_data.integer_labels)[sub_sample_indices.numpy()].tolist()
     cifar_data.current_data = cifar_data.partition_data()
 
 
@@ -480,11 +480,11 @@ def main():
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', action="store", type=str,
-                        default='./lop/incremental_cifar/cfg/base_deep_learning_system.json',
+                        default='./incremental_cifar/cfg/base_deep_learning_system.json',
                         help="Path to the file containing the parameters for the experiment.")
     parser.add_argument("--experiment-index", action="store", type=int, default=0,
                         help="Index for the run; this will determine the random seed and the name of the results.")
-    parser.add_argument("--verbose", action="store_true", type=bool, default=False,
+    parser.add_argument("--verbose", action="store_true", default=False,
                         help="Whether to print extra information about the experiment as it's running.")
     args = parser.parse_args()
 
