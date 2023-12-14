@@ -18,7 +18,7 @@
   "use_cbp": false,
 
   "_comment_5_": "Network resetting parameters",
-  "reset_head": false,
-  "reset_network": true,
+  "reset_head": true,
+  "reset_network": false,
   "early_stopping": true
 }
