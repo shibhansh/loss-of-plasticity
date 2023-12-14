@@ -1,5 +1,5 @@
 {
-  "_model_description_": "Base resnet system without resetting the network after every task",
+  "_model_description_": "Base resnet system",
 
   "_comment_1_": "Data paths; change data_path and results_dir to your convenience",
   "data_path": "",

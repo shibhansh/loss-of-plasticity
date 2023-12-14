@@ -1,10 +1,10 @@
 {
-  "_model_description_": "Base resnet system without resetting the network after every task",
+  "_model_description_": "Continual backpropagation algorithm",
 
   "_comment_1_": "Data paths; change data_path and results_dir to your convenience",
   "data_path": "",
   "results_dir": "",
-  "experiment_name":  "base_deep_learning_system",
+  "experiment_name":  "continual_backpropagation",
 
   "_comment_2_": "Learner Parameters",
   "stepsize":  0.1,
