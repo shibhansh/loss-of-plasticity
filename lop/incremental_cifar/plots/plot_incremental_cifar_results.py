@@ -48,7 +48,7 @@ def get_colors(algorithms: list):
         "retrained_network": "#7f7f7f",             # tab: grey
         "head_resetting": "#2ca02c",                # tab: green
         "shrink_and_perturb": "#ff7f0e",            # tab: orange
-        "continual_backprop": "#1f77b4",            # tab: blue
+        "continual_backpropagation": "#1f77b4",            # tab: blue
     }
 
     other_colors = ["#FBB829",  # heart of gold
