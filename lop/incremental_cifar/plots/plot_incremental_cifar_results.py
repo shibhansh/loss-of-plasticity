@@ -136,7 +136,7 @@ def create_plots(plot_arguments: dict):
     """
     Creates a dictionary with colors.
     """
-    algorithms = plot_arguments["algorithms"].split()
+    algorithms = plot_arguments["algorithms"].split(",")
     metric = plot_arguments["metric"]
     results_dir = plot_arguments["results_dir"]
 
