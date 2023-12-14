@@ -81,6 +81,9 @@ def retrieve_results(algorithms: list, metric: str, results_dir: str):
     return: dictionary of algorithm names - numpy array pairs
     """
 
+    if metric == "relative_accuracy_per_epoch":
+        metric = "test_accuracy_per_epoch"
+
     results_dict = {}
     total_num_epochs = 4000
     epochs_per_task = 200
@@ -110,16 +113,26 @@ def retrieve_results(algorithms: list, metric: str, results_dir: str):
     return results_dict
 
 
-def plot_all_results(results_dict: dict, colors: dict):
+def plot_all_results(results_dict: dict, colors: dict, metric: str):
     """
     Makes a line plot for each different algorithm in results dict
 
     :param results_dict: dictionary of (algorithm names, results) pairs
     :param colors: dictionary of (algorithm names, color hex key) pairs
+    :param metric: str corresponding to the metric being plotted
     """
+
+    if metric == "relative_accuracy_per_epoch":
+        assert "retrained_network" in results_dict.keys()
 
     fig, ax = plt.subplots()
     for alg, results in results_dict.items():
+
+        if metric == "relative_accuracy_per_epoch":
+            if alg == "retrained_network":
+                continue
+            else:
+                results = results - results_dict["retrained_network"]
 
         results_mean = np.average(results, axis=0)
         results_std = np.zeros_like(results_mean)
@@ -143,7 +156,7 @@ def create_plots(plot_arguments: dict):
     colors = get_colors(algorithms)
     results = retrieve_results(algorithms, metric, results_dir)
 
-    plot_all_results(results, colors)
+    plot_all_results(results, colors, metric)
 
     plt.ylabel(metric)
     plt.xlabel("Task Number")
@@ -161,7 +174,8 @@ def main():
                         help="Comma separated list of algorithms.")
     parser.add_argument("--metric", action="store", type=str, default="test_accuracy_per_epoch",
                         help="Metric to plot for each algorithm.",
-                        choices=["next_task_dormant_units_analysis", "next_task_effective_rank_analysis", "next_task_stable_rank_analysis",
+                        choices=["next_task_dormant_units_analysis", "relative_accuracy_per_epoch",
+                                 "next_task_effective_rank_analysis", "next_task_stable_rank_analysis",
                                  "previous_tasks_dormant_units_analysis", "previous_tasks_effective_rank_analysis",
                                  "previous_tasks_stable_rank_analysis", "test_accuracy_per_epoch",
                                  "test_loss_per_epoch", "weight_magnitude_analysis"])
