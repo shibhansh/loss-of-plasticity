@@ -5,8 +5,10 @@ import pickle
 from copy import deepcopy
 import json
 import argparse
+from functools import partialmethod
 
 # third party libraries
+from tqdm import tqdm
 import torch
 from torch.utils.data import DataLoader
 import numpy as np
@@ -48,6 +50,9 @@ class IncrementalCIFARExperiment(Experiment):
 
         # define torch device
         self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+        # disable tqdm if verbose is enabled
+        tqdm.__init__ = partialmethod(tqdm.__init__, disable=self.verbose)
 
         """ For reproducibility """
         random_seeds = get_random_seeds()
@@ -282,13 +287,12 @@ class IncrementalCIFARExperiment(Experiment):
         training_data, training_dataloader = self.get_data(train=True, validation=False)
         val_data, val_dataloader = self.get_data(train=True, validation=True)
         test_data, test_dataloader = self.get_data(train=False)
-
+        # load checkpoint if one is available
         self.load_experiment_checkpoint()
         # train network
         self.train(train_dataloader=training_dataloader, test_dataloader=test_dataloader, val_dataloader=val_dataloader,
                    test_data=test_data, training_data=training_data, val_data=val_data)
-
-        # summaries stored in memory automatically if using mlproj_manager
+        # store results using exp.store_results()
 
     def get_data(self, train: bool = True, validation: bool = False):
         """
@@ -367,7 +371,7 @@ class IncrementalCIFARExperiment(Experiment):
         val_data.select_new_partition(self.all_classes[:self.current_num_classes])
         self._save_model_parameters()
 
-        for e in range(self.current_epoch, self.num_epochs):
+        for e in tqdm(range(self.current_epoch, self.num_epochs)):
             self._print("\tEpoch number: {0}".format(e + 1))
             self.set_lr()
 
