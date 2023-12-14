@@ -87,8 +87,6 @@ def retrieve_results(algorithms: list, metric: str, results_dir: str):
     denominator = 512 if "rank" in metric else 1.0
     start_idx = 1 if "next" in metric else 0
 
-
-
     for alg in algorithms:
         temp_dir = os.path.join(results_dir, alg, metric)
         num_samples = len(os.listdir(temp_dir))
