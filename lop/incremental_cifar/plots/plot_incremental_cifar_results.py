@@ -96,16 +96,16 @@ def retrieve_results(algorithms: list, metric: str, results_dir: str):
 
         for index in range(num_samples):
             temp_result_path = os.path.join(temp_dir, "index-{0}.npy".format(index))
-            temp_results = np.load(temp_result_path) / denominator
+            index_results = np.load(temp_result_path) / denominator
 
             if "accuracy" in metric:
-                temp_results = get_max_over_bins(temp_results, bin_size=epochs_per_task)
+                index_results = get_max_over_bins(index_results, bin_size=epochs_per_task)
             elif "loss" in metric:
-                temp_results = get_min_over_bins(temp_results, bin_size=epochs_per_task)
+                index_results = get_min_over_bins(index_results, bin_size=epochs_per_task)
             else:
                 pass
 
-            temp_results[index] = temp_results
+            temp_results[index] = index_results
 
         results_dict[alg] = temp_results[start_idx:, :]
 
