@@ -5,6 +5,7 @@
   "data_path": "",
   "results_dir": "",
   "experiment_name":  "retrained_network",
+  "num_workers":  12,
 
   "_comment_2_": "Learner Parameters",
   "stepsize":  0.1,

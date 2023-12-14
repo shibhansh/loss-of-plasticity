@@ -5,6 +5,7 @@
   "data_path": "",
   "results_dir": "",
   "experiment_name":  "base_deep_learning_system",
+  "num_workers":  12,
 
   "_comment_2_": "Learner Parameters",
   "stepsize":  0.1,
