@@ -92,7 +92,7 @@ def retrieve_results(algorithms: list, metric: str, results_dir: str):
     for alg in algorithms:
         temp_dir = os.path.join(results_dir, alg, metric)
         num_samples = len(os.listdir(temp_dir))
-        temp_results = np.zeros(num_samples, total_num_epochs // epochs_per_task, dtype=np.float32)
+        temp_results = np.zeros((num_samples, total_num_epochs // epochs_per_task), dtype=np.float32)
 
         for index in range(num_samples):
             temp_result_path = os.path.join(temp_dir, "index-{0}.npy".format(index))
@@ -162,8 +162,7 @@ def main():
                         help="Comma separated list of algorithms.")
     parser.add_argument("--metric", action="store", type=str, default="test_accuracy_per_epoch",
                         help="Metric to plot for each algorithm.",
-                        choices=["accuracy_per_class_in_order", "next_task_dormant_units_analysis",
-                                 "next_task_effective_rank_analysis", "next_task_stable_rank_analysis",
+                        choices=["next_task_dormant_units_analysis", "next_task_effective_rank_analysis", "next_task_stable_rank_analysis",
                                  "previous_tasks_dormant_units_analysis", "previous_tasks_effective_rank_analysis",
                                  "previous_tasks_stable_rank_analysis", "test_accuracy_per_epoch",
                                  "test_loss_per_epoch", "weight_magnitude_analysis"])
