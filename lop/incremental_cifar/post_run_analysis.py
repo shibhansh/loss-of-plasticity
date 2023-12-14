@@ -246,7 +246,6 @@ def analyze_results(results_dir: str, data_path: str, dormant_unit_threshold: fl
     test_data, test_data_loader = load_cifar_data(data_path, train=False)
 
     for exp_index in tqdm(experiment_indices):
-        print("Experiment index: {0}".format(exp_index))
         ordered_classes = load_classes(class_order_dir_path, index=exp_index)
 
         average_weight_magnitude_per_epoch = np.zeros(number_of_epochs.size - 1, dtype=np.float32)
