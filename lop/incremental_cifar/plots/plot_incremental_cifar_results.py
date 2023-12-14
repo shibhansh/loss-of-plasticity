@@ -85,7 +85,7 @@ def retrieve_results(algorithms: list, metric: str, results_dir: str):
     total_num_epochs = 4000
     epochs_per_task = 200
     denominator = 512 if "rank" in metric else 1.0
-    start_idx = 0 if "previous" not in metric else 1
+    start_idx = 1 if "next" in metric else 0
 
 
 
