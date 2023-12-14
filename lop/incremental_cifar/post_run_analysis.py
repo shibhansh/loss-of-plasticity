@@ -1,9 +1,15 @@
+"""
+Script for computing the effective rank, stable rank, number of dormant neurons, and average weight magnitude of the
+models trained during the incremental cifar experiment.
+"""
+
 # built-in libraries
 import time
 import os
 import argparse
 
 # third party libraries
+from tqdm import tqdm
 import torch
 from torch.utils.data import DataLoader
 import numpy as np
@@ -239,7 +245,7 @@ def analyze_results(results_dir: str, data_path: str, dormant_unit_threshold: fl
     cifar_data, cifar_data_loader = load_cifar_data(data_path, train=True)
     test_data, test_data_loader = load_cifar_data(data_path, train=False)
 
-    for exp_index in experiment_indices:
+    for exp_index in tqdm(experiment_indices):
         print("Experiment index: {0}".format(exp_index))
         ordered_classes = load_classes(class_order_dir_path, index=exp_index)
 
@@ -294,13 +300,13 @@ def analyze_results(results_dir: str, data_path: str, dormant_unit_threshold: fl
 
 
 def parse_arguments() -> dict:
-    file_description = "Script for computing the effective rankk, number of dead neurons, and weight magnitude of the" \
-                       " models trained during the incremental cifar experiment."
-    parser = argparse.ArgumentParser(description=file_description)
 
-    parser.add_argument('--results_dir', action="store", type=str, required=True,
+    file_path = os.path.dirname(os.path.abspath(__file__))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--results_dir', action="store", type=str,
+                        default=os.path.join(file_path, "results", "base_deep_learning_system"),
                         help="Path to directory with the results of a parameter combination.")
-    parser.add_argument('--data_path', action="store", type=str, required=True,
+    parser.add_argument('--data_path', action="store", type=str, default=os.path.join(file_path, "data"),
                         help="Path to directory with the CIFAR 100 data set.")
     parser.add_argument('--dormant_unit_threshold', action="store", type=float, default=0.01,
                         help="Units whose activations are less than this threshold are considered dormant.")
