@@ -125,7 +125,7 @@ def plot_all_results(results_dict: dict, colors: dict):
 
         results_mean = np.average(results, axis=0)
         results_std = np.zeros_like(results_mean)
-        num_samples = results..shape[0]
+        num_samples = results.shape[0]
         if num_samples > 1:
             results_std = np.std(results, axis=0, ddof=1) / np.sqrt(num_samples)
 
