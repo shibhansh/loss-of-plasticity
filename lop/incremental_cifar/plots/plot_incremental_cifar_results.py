@@ -132,7 +132,10 @@ def plot_all_results(results_dict: dict, colors: dict, metric: str):
             if alg == "retrained_network":
                 continue
             else:
-                results = results - results_dict["retrained_network"]
+                num_samples = results.shape[0]
+                if results_dict["retrained_network"].shape[0] < num_samples:
+                    raise ValueError("There are not enough samples for the baseline")
+                results = results - results_dict["retrained_network"][:num_samples, :]
 
         results_mean = np.average(results, axis=0)
         results_std = np.zeros_like(results_mean)
