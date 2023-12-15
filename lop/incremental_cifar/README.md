@@ -6,7 +6,7 @@ allow for the reproduction of the results in the paper.
 ### Set Up
 The first step to replicate the results is to set the correct python path and activate the 
 virtual environment; this is assuming you already followed the steps in the installation.
-You can either run the two commands in your terminal below by replacing `PATH_TO_DIR` with the 
+You can run the two commands in your terminal below by replacing `PATH_TO_DIR` with the 
 correct path to where the project `loss-of-plasticity` is located.
 
 ```sh
@@ -23,13 +23,13 @@ The script takes three arguments:
 * `--config`: this is a path to a `json` file that defines the parameter values for the experiment.
     We provide config files for each algorithm shown in the paper, but you may also write your own.
     For more details on how to write a config file, see the `README` in the `cfg` directory. 
-    The only parameter you might have to adjust is `num_workers` depending on the number of available cpu cores.
+    **Note:** you might have to adjust is `num_workers` depending on the number of available cpu cores.
 * `--experiment-index`: this is a positive integer that determines the random seed for the experiment.
     As long as you use the same index, the results should be identical as long as you run the experiment 
-    without any interruptions.
+    without any interruptions and on the same hardware.
     More on checkpointing at the end. 
 * `--verbose`: indicates whether to print detailed information about the progress of the experiment.
-    If enabled, the script will print the train accuracy for each 25 mini-batches and the test and
+    If enabled, the script will print the train accuracy for every 25 mini-batches and the test and
     validation accuracy for each epoch, as well as the run time for each epoch.
     If disabled, it simply shows a progress bar.
     Note that the estimated time displayed on the progress bar is not very accurate since iterations
@@ -55,9 +55,9 @@ By default, the results are stored in `PATH_TO_DIR/loss-of-plasticity/lop/increm
 When the script is done running, it would have created a new directory with the name of the experiment,
 which is specified in the config file and is by default the name of the `json` file. 
 Inside of this directory, there will be several directories corresponding to different metrics.
-Each metric directory contains files named `index-$EXPERIMENT_INDEX.npy` corresponding to the given
+Each metric directory contains files named `index-${experiment_index}.npy` corresponding to the given
 experiment index. 
-You can use these files to reproduce the plots in the paper. 
+You can then use these files to reproduce the plots in the paper. 
 
 ### Post-Run Analysis
 
@@ -78,13 +78,51 @@ With this in mind, you can run the script for the `base_deep_learning_system` by
 line:
 
 ```sh
-python3.8 post_run_analysis.py --results_dir ./results/base_deep_lerning_system/
+python post_run_analysis.py --results_dir ./results/base_deep_learning_system/
 ```
 
 ### Reproducing the Plots in the Paper
 
+You can generate the plots found in the paper using the following three commands
 
-The plot may not look exactly the same as in the paper because of differences in hardware and package
+```sh
+python python ./plots/plot_incremental_cifar_results.py --results_dir ./results/ \
+--algorithms base_deep_learning_system,continual_backpropagation,retrained_network \
+--metric relative_accuracy_per_epoch
+```
+
+The command above requires that you pass `retrained_network` as one of the algorithms because that is
+the one used as baseline. 
+The command above generates the blue and red lines in the left panel of the figure below: 
+
+![](plots/incremental_cifar.png "Performance of algorithms in incremental CIFAR-100.")
+
+Whereas the following two commands generate the blue and red lines in the center and right panels of
+the figure above:
+
+```sh
+python ./plots/plot_incremental_cifar_results.py --results_dir ./results/ \
+--algorithms base_deep_learning_system,continual_backpropagation \
+--metric next_task_dormant_units_analysis
+
+
+python ./plots/plot_incremental_cifar_results.py --results_dir ./results/ \
+--algorithms base_deep_learning_system,continual_backpropagation \
+--metric next_task_stable_rank_analysis
+```
+
+Finally, to plot the raw accuracies for the base deep learning system, continual backprop, and 
+retrained network baseline use the following command:
+
+```sh
+python python ./plots/plot_incremental_cifar_results.py --results_dir ./results/ \
+--algorithms base_deep_learning_system,continual_backpropagation,retrained_network \
+--metric test_accuracy_per_epoch
+```
+
+![](plots/raw_accuracy_incremental_cifar.png "Raw accuracy of algorithms in incremental CIFAR-100.")
+
+The plots may not look exactly the same as in the paper because of differences in hardware and package
 versions.
 However, with enough samples, you should see close to the same pattern as in the paper. 
 
