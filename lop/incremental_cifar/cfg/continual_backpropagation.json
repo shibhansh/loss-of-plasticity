@@ -1,0 +1,28 @@
+{
+  "_model_description_": "Continual backpropagation algorithm",
+
+  "_comment_1_": "Data paths; change data_path and results_dir to your convenience",
+  "data_path": "",
+  "results_dir": "",
+  "experiment_name":  "continual_backpropagation",
+  "num_workers":  12,
+
+  "_comment_2_": "Learner Parameters",
+  "stepsize":  0.1,
+  "weight_decay": 0.0005,
+  "momentum": 0.9,
+  
+  "_comment_3_": "Shrink and perturb parameters",
+  "noise_std": 0.0,
+
+  "_comment_4_": "Continual Backprop Parameters",
+  "use_cbp": true,
+  "replacement_rate": 0.00001,
+  "utility_function": "contribution",
+  "maturity_threshold": 1000,
+
+  "_comment_5_": "Network resetting parameters",
+  "reset_head": false,
+  "reset_network": false,
+  "early_stopping": true
+}

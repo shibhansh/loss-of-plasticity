@@ -1,0 +1,25 @@
+{
+  "_model_description_": "Base resnet system that is reinitialized at the start of each task",
+
+  "_comment_1_": "Data paths; change data_path and results_dir to your convenience",
+  "data_path": "",
+  "results_dir": "",
+  "experiment_name":  "retrained_network",
+  "num_workers":  12,
+
+  "_comment_2_": "Learner Parameters",
+  "stepsize":  0.1,
+  "weight_decay": 0.0005,
+  "momentum": 0.9,
+  
+  "_comment_3_": "Shrink and perturb parameters",
+  "noise_std": 0.0,
+
+  "_comment_4_": "Continual Backprop Parameters",
+  "use_cbp": false,
+
+  "_comment_5_": "Network resetting parameters",
+  "reset_head": false,
+  "reset_network": true,
+  "early_stopping": true
+}
