@@ -9,6 +9,31 @@ import torch
 from scipy.linalg import svd
 
 
+def net_init(net, orth=0, w_fac=1.0, b_fac=0.0):
+    if orth:
+        for module in net:
+            if hasattr(module, 'weight'):
+                nn.init.orthogonal_(module.weight, gain=np.sqrt(2))
+            if hasattr(module, 'bias'):
+                nn.init.constant_(module.bias, val=0)
+    else:
+        net[-1].weight.data.mul_(w_fac)
+        if hasattr(net[-1], 'bias'):
+            net[-1].bias.data.mul_(b_fac)
+
+def fc_body(act_type, o_dim, h_dim, bias=True):
+    activation = {'Tanh': nn.Tanh, 'ReLU': nn.ReLU, 'elu': nn.ELU, 'sigmoid':nn.Sigmoid}[act_type]
+    module_list = nn.ModuleList()
+    if len(h_dim) == 0:
+        return module_list
+    module_list.append(nn.Linear(o_dim, h_dim[0], bias=bias))
+    module_list.append(activation())
+    for i in range(len(h_dim) - 1):
+        module_list.append(nn.Linear(h_dim[i], h_dim[i + 1], bias=bias))
+        module_list.append(activation())
+    return module_list
+
+
 def get_configurations(params: {}):
     # get all parameter configurations for individual runs
     list_params = [key for key in params.keys() if type(params[key]) is list]

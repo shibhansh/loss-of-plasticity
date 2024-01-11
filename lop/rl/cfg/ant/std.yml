@@ -1,0 +1,18 @@
+env_name: 'Ant-v3'
+act_type: 'ReLU'
+n_steps: 1e8
+g: 0.99
+lm: 0.95
+u_epi_ups: 0
+bs: 2048
+n_itrs: 10
+n_slices: 16
+lr: 0.0001
+h_dim: [256, 256]
+u_adv_scl: 1
+clip_eps: 0.2
+ob_norm: 0
+rew_norm: 0
+dir: 'data/ant/bp/std/'
+to_log: ['pol_features_activity', 'pol_weights', 'val_weights', 'stable_rank', 'weight_change']
+label: 'Standard PPO'

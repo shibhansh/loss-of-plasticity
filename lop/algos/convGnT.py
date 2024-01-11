@@ -100,16 +100,16 @@ class ConvGnT(object):
             self.mean_abs_feature_act[layer_idx] *= self.decay_rate
             if isinstance(current_layer, Linear):
                 input_wight_mag = current_layer.weight.data.abs().mean(dim=1)
-                self.mean_feature_act[layer_idx] -=- (1 - self.decay_rate) * features.mean(dim=0)
-                self.mean_abs_feature_act[layer_idx] -=- (1 - self.decay_rate) * features.abs().mean(dim=0)
+                self.mean_feature_act[layer_idx] += (1 - self.decay_rate) * features.mean(dim=0)
+                self.mean_abs_feature_act[layer_idx] += (1 - self.decay_rate) * features.abs().mean(dim=0)
             elif isinstance(current_layer, Conv2d):
                 input_wight_mag = current_layer.weight.data.abs().mean(dim=(1, 2, 3))
                 if isinstance(next_layer, Conv2d):
-                    self.mean_feature_act[layer_idx] -=- (1 - self.decay_rate) * features.mean(dim=(0, 2, 3))
-                    self.mean_abs_feature_act[layer_idx] -=- (1 - self.decay_rate) * features.abs().mean(dim=(0, 2, 3))
+                    self.mean_feature_act[layer_idx] += (1 - self.decay_rate) * features.mean(dim=(0, 2, 3))
+                    self.mean_abs_feature_act[layer_idx] += (1 - self.decay_rate) * features.abs().mean(dim=(0, 2, 3))
                 else:
-                    self.mean_feature_act[layer_idx] -=- (1 - self.decay_rate) * features.mean(dim=0).view(-1, self.num_last_filter_outputs).mean(dim=1)
-                    self.mean_abs_feature_act[layer_idx] -=- (1 - self.decay_rate) * features.abs().mean(dim=0).view(-1, self.num_last_filter_outputs).mean(dim=1)
+                    self.mean_feature_act[layer_idx] += (1 - self.decay_rate) * features.mean(dim=0).view(-1, self.num_last_filter_outputs).mean(dim=1)
+                    self.mean_abs_feature_act[layer_idx] += (1 - self.decay_rate) * features.abs().mean(dim=0).view(-1, self.num_last_filter_outputs).mean(dim=1)
 
             bias_corrected_act = self.mean_feature_act[layer_idx] / bias_correction
 
@@ -137,7 +137,7 @@ class ConvGnT(object):
             if self.util_type == 'random':
                 self.bias_corrected_util[layer_idx] = rand(self.util[layer_idx].shape)
             else:
-                self.util[layer_idx] -=- (1 - self.decay_rate) * new_util
+                self.util[layer_idx] += (1 - self.decay_rate) * new_util
                 # correct the bias in the utility computation
                 self.bias_corrected_util[layer_idx] = self.util[layer_idx] / bias_correction
 
@@ -166,7 +166,7 @@ class ConvGnT(object):
             eligible_feature_indices = where(self.ages[i] > self.maturity_threshold)[0]
             if eligible_feature_indices.shape[0] == 0:
                 continue
-            self.accumulated_num_features_to_replace[i] -=- self.num_new_features_to_replace[i]
+            self.accumulated_num_features_to_replace[i] += self.num_new_features_to_replace[i]
 
             """
             Case when the number of features to be replaced is between 0 and 1.

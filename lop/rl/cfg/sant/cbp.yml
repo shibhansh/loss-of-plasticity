@@ -1,0 +1,26 @@
+env_name: 'SlipperyAnt-v3'
+act_type: 'ReLU'
+n_steps: 2e7
+change_time: 2000000
+g: 0.99
+lm: 0.95
+u_epi_ups: 0
+bs: 2048
+n_itrs: 10
+n_slices: 16
+lr: 0.0001
+h_dim: [256, 256]
+u_adv_scl: 1
+clip_eps: 0.2
+ob_norm: 0
+rew_norm: 0
+rr: 1e-4
+mt: 10000
+util_type_val: 'contribution'
+util_type_pol: 'contribution'
+beta_1: 0.99
+beta_2: 0.99
+wd: 1e-4
+frictions_file: 'cfg/frictions'
+dir: 'data/sant/cbp/'
+label: 'CBP+PPO'

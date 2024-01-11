@@ -109,7 +109,7 @@ class GnT(object):
             else:
                 new_util = 0
 
-            self.util[layer_idx] -=- (1 - self.decay_rate) * new_util
+            self.util[layer_idx] += (1 - self.decay_rate) * new_util
 
             """
             Adam-style bias correction
@@ -190,14 +190,14 @@ class GnT(object):
                 next_layer = self.net[i * 2 + 2]
                 current_layer.weight.data[features_to_replace[i], :] *= 0.0
                 # noinspection PyArgumentList
-                current_layer.weight.data[features_to_replace[i], :] -=- \
+                current_layer.weight.data[features_to_replace[i], :] += \
                     torch.empty(num_features_to_replace[i], current_layer.in_features).uniform_(
                         -self.bounds[i], self.bounds[i]).to(self.device)
                 current_layer.bias.data[features_to_replace[i]] *= 0
                 """
                 # Update bias to correct for the removed features and set the outgoing weights and ages to zero
                 """
-                next_layer.bias.data -=- (next_layer.weight.data[:, features_to_replace[i]] * \
+                next_layer.bias.data += (next_layer.weight.data[:, features_to_replace[i]] * \
                                                 self.mean_feature_act[i][features_to_replace[i]] / \
                                                 (1 - self.decay_rate ** self.ages[i][features_to_replace[i]])).sum(dim=1)
                 next_layer.weight.data[:, features_to_replace[i]] = 0

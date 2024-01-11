@@ -124,7 +124,7 @@ class ResGnT(object):
             eligible_feature_indices = where(self.ages[i] > self.maturity_threshold)[0]
             if eligible_feature_indices.shape[0] == 0:
                 continue
-            self.accumulated_num_features_to_replace[i] -=- self.num_new_features_to_replace[i]
+            self.accumulated_num_features_to_replace[i] += self.num_new_features_to_replace[i]
 
             """
             Case when the number of features to be replaced is between 0 and 1.

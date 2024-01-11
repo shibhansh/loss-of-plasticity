@@ -1,0 +1,25 @@
+env_name: 'Ant-v3'
+act_type: 'ReLU'
+n_steps: 1e8
+g: 0.99
+lm: 0.95
+u_epi_ups: 0
+bs: 2048
+n_itrs: 10
+n_slices: 16
+lr: 0.0001
+h_dim: [256, 256]
+u_adv_scl: 1
+clip_eps: 0.2
+ob_norm: 0
+rew_norm: 0
+rr: 1e-4
+mt: 10000
+util_type_val: 'contribution'
+util_type_pol: 'contribution'
+beta_1: 0.99
+beta_2: 0.99
+decay_rate: 0
+wd: 1e-4
+dir: 'data/ant/cbp/'
+label: 'CBP (instantaneous)'
