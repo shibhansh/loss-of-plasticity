@@ -5,7 +5,6 @@ The first step to replicate the results is to download the data. The data can be
 Create a directory named `data` and extract the downloaded file in `data`
 ```sh
 mkdir data
-python3.8 load_mnist.py
 ```
 
 The next step is to test a deep convolution network that uses backprop to learn.
