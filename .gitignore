@@ -8,6 +8,7 @@ lib/
 pyvenv.cfg
 lop.egg-info
 __pycache__/
+share/
 *.pyc
 data/
 .DS_Store

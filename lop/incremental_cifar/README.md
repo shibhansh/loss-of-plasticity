@@ -3,16 +3,6 @@
 This repository contains the implementation of the incremental CIFAR-100 problem, which should
 allow for the reproduction of the results in the paper.
 
-### Set Up
-The first step to replicate the results is to set the correct python path and activate the 
-virtual environment; this is assuming you already followed the steps in the installation.
-You can run the two commands in your terminal below by replacing `PATH_TO_DIR` with the 
-correct path to where the project `loss-of-plasticity` is located.
-
-```sh
-source PATH_TO_DIR/loss-of-plasticity/bin/activate
-export PYTHONPATH=${PYTHONPATH}:PATH_TO_DIR/loss-of-plasticity
-```
 
 ### Running the Experiment 
 
@@ -36,7 +26,7 @@ The script takes three arguments:
     increase in length as new classes are added. 
 
 With this in mind, you can run the experiment for the base deep learning system using the following 
-command:
+command. A single run with the base deep-learning system takes about 6 hours on an A-100 GPU.
 
 ```sh
 python3.8 incremental_cifar_experiment.py --config ./cfg/base_deep_learning_system.json ---verbose \
@@ -57,7 +47,7 @@ which is specified in the config file and is by default the name of the `json` f
 Inside of this directory, there will be several directories corresponding to different metrics.
 Each metric directory contains files named `index-${experiment_index}.npy` corresponding to the given
 experiment index. 
-You can then use these files to reproduce the plots in the paper. 
+You can then use these files to reproduce the plots in the paper.
 
 ### Post-Run Analysis
 
@@ -78,7 +68,7 @@ With this in mind, you can run the script for the `base_deep_learning_system` by
 line:
 
 ```sh
-python post_run_analysis.py --results_dir ./results/base_deep_learning_system/
+python3.8 post_run_analysis.py --results_dir ./results/base_deep_learning_system/
 ```
 
 ### Reproducing the Plots in the Paper
@@ -86,7 +76,7 @@ python post_run_analysis.py --results_dir ./results/base_deep_learning_system/
 You can generate the plots found in the paper using the following three commands
 
 ```sh
-python python ./plots/plot_incremental_cifar_results.py --results_dir ./results/ \
+python3.8 ./plots/plot_incremental_cifar_results.py --results_dir ./results/ \
 --algorithms base_deep_learning_system,continual_backpropagation,retrained_network \
 --metric relative_accuracy_per_epoch
 ```
@@ -101,12 +91,12 @@ Whereas the following two commands generate the blue and red lines in the center
 the figure above:
 
 ```sh
-python ./plots/plot_incremental_cifar_results.py --results_dir ./results/ \
+python3.8 ./plots/plot_incremental_cifar_results.py --results_dir ./results/ \
 --algorithms base_deep_learning_system,continual_backpropagation \
 --metric next_task_dormant_units_analysis
 
 
-python ./plots/plot_incremental_cifar_results.py --results_dir ./results/ \
+python3.8 ./plots/plot_incremental_cifar_results.py --results_dir ./results/ \
 --algorithms base_deep_learning_system,continual_backpropagation \
 --metric next_task_stable_rank_analysis
 ```
@@ -115,7 +105,7 @@ Finally, to plot the raw accuracies for the base deep learning system, continual
 retrained network baseline use the following command:
 
 ```sh
-python python ./plots/plot_incremental_cifar_results.py --results_dir ./results/ \
+python3.8 ./plots/plot_incremental_cifar_results.py --results_dir ./results/ \
 --algorithms base_deep_learning_system,continual_backpropagation,retrained_network \
 --metric test_accuracy_per_epoch
 ```

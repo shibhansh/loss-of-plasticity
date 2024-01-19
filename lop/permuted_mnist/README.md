@@ -4,6 +4,7 @@ This repository contains the implementation of the online Permuted MNIST problem
 The first step to replicate the results is to download the data.
 
 ```sh
+cd lop/permuted_mnist
 mkdir data
 python3.8 load_mnist.py
 ```
@@ -29,7 +30,7 @@ python3.8 bp_metrics.py --cfg_file ../cfg/bp/std_net.json --metric accuracy
 ```
 
 The command above will generate the plot on the left below.
-I have found the variance among individual runs to be surprisingly small.
+The variance among individual runs is surprisingly small.
 Just one run can be used for quick prototyping.
 
 ![](plots/mnist_accuracy.png "BP on Online Permuted MNIST")
