@@ -7,6 +7,7 @@ import numpy as np
 from tqdm import tqdm
 from lop.algos.bp import Backprop
 from lop.nets.conv_net import ConvNet
+from lop.nets.conv_net2 import ConvNet2
 from lop.algos.convCBP import ConvCBP
 from torch.nn.functional import softmax
 from lop.nets.linear import MyLinear
@@ -58,6 +59,7 @@ def repeat_expr(params: {}):
     mini_batch_size = 100
     perturb_scale = 0
     momentum = 0
+    net_type = 1
     if 'replacement_rate' in params.keys(): replacement_rate = params['replacement_rate']
     if 'decay_rate' in params.keys(): decay_rate = params['decay_rate']
     if 'util_type' in params.keys(): util_type = params['util_type']
@@ -73,10 +75,13 @@ def repeat_expr(params: {}):
     if 'mini_batch_size' in params.keys():  mini_batch_size = params['mini_batch_size']
     if 'perturb_scale' in params.keys():    perturb_scale = params['perturb_scale']
     if 'momentum' in params.keys(): momentum = params['momentum']
+    if 'net_type' in params.keys(): net_type = params['net_type']
     num_epochs = num_showings
 
     classes_per_task = num_classes
     net = ConvNet()
+    if net_type == 2:
+        net = ConvNet2(replacement_rate=replacement_rate, maturity_threshold=maturity_threshold)
     if agent_type == 'linear':
         net = MyLinear( 
             input_size=3072, num_outputs=classes_per_task

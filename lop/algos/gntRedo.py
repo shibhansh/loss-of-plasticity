@@ -6,7 +6,15 @@ class GnTredo(object):
     """
     Generate-and-Test algorithm for feed forward neural networks, based on ReDo
     """
-    def __init__(self, net, hidden_activation, threshold=0.01, init='kaiming', device="cpu", reset_period=1000):
+    def __init__(
+            self,
+            net,
+            hidden_activation,
+            threshold=0.01,
+            init='kaiming',
+            device="cpu",
+            reset_period=1000
+    ):
         super(GnTredo, self).__init__()
         self.device = device
         self.net = net

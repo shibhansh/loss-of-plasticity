@@ -130,7 +130,7 @@ def main():
         friction_number = 0
         new_friction = frictions[seed][friction_number]
 
-        if friction < 0: # If no saved friction, use the default vaule 1.0
+        if friction < 0: # If no saved friction, use the default value 1.0
             friction = 1.0
         env = gym.make(cfg['env_name'], friction=new_friction, xml_file=xml_file)
         print(f'Initial friction: {friction:.6f}')
