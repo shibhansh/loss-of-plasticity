@@ -5,7 +5,7 @@ This directory contains different implementations of continual backpropagation. 
 `cbp_linear.py` and `cbp_conv.py` contain a newer and easier-to-use implementation of continual backpropagation.
 This implementation allows you to use continual backpropagation like a layer in a network (similar to dropout or batch norm).
 
-To use CBP as a layer, define a CBP layer in the network and make sure that activation passes through the CBP layer during the forward pass. See `../nets/conv_net2.py` for an example.
+To use CBP as a layer, define a CBP layer in the network and make sure that activation passes through the CBP layer during the forward pass. See [../nets/conv_net2.py](../nets/conv_net2.py) for an example.
 
 CBPLinear takes the following arguments. The first four are important to fully describe the algorithm. The remaining are important for functioning of the algorithm but default values work well:
 * `in_layer`: The layer containing the incoming weights of hidden units. 

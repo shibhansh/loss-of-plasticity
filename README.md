@@ -11,19 +11,34 @@
 
 ## Overview
 
-Artificial neural networks, deep-learning methods, and the backpropagation algorithm form the foundation of modern machine learning and artificial intelligence.
-These methods are almost always used in two phases, one in which the network's weights are updated, and one in which the weights are held constant while the network is used or evaluated.
-This contrasts with natural learning and many applications, which require \textit{continual} learning.
-Do deep learning methods work in continual learning settings?
-Here we show that they do not---that standard deep-learning methods gradually lose plasticity in continual learning settings until they learn no better than a shallow network.
-We show such loss of plasticity using the classic ImageNet dataset and reinforcement learning problems across a wide range of variations in the network and the learning algorithm. 
-Plasticity is maintained indefinitely only by algorithms that continually inject diversity into the network, such as our \emph{continual backpropagation} algorithm, a variation of backpropagation in which a small fraction of less-used units are continually and randomly reinitialized.
-Our results suggest that methods based on gradient descent are not enough---that sustained deep learning requires a random, non-gradient component to maintain variability and plasticity.
+This repository contains the code to reproduce the experiments present in our paper titled [Loss of Plasticity in Deep Continual Learning](https://www.nature.com/articles/s41586-024-07711-7).
+A talk about this work can be found [here](https://www.youtube.com/watch?v=p_zknyfV9fY).
 
+### Abstract
+Artificial neural networks, deep-learning methods and the backpropagation algorithm form the foundation of modern machine learning and artificial intelligence.
+These methods are almost always used in two phases, one in which the weights of the network are updated and one in which the weights are held constant while the network is used or evaluated. 
+This contrasts with natural learning and many applications, which require continual learning. 
+It has been unclear whether deep-learning methods work in continual-learning settings. 
+Here we show that they do not—that standard deep-learning methods gradually lose plasticity in continual-learning settings until they learn no better than a shallow network. 
+We show such loss of plasticity using the classic ImageNet dataset and reinforcement-learning problems across a wide range of variations in the network and the learning algorithm. 
+Plasticity is maintained indefinitely only by algorithms that continually inject diversity into the network, such as our continual backpropagation algorithm, a variation of backpropagation in which a small fraction of less-used units are continually and randomly reinitialized. 
+Our results indicate that methods based on gradient descent are not enough—that sustained deep learning requires a random, non-gradient component to maintain variability and plasticity.
 
-A talk about this work can be found [here](https://www.youtube.com/watch?v=p_zknyfV9fY), 
-and the [paper](https://arxiv.org/abs/2306.13812) is available on arxiv.
-This repository contains the code to reproduce the experiments present in the paper.
+### Citation
+Please cite our work if you find it useful:
+
+```latex
+@article{dohare2024loss,
+  title={Loss of Plasticity in Deep Continual Learning},
+  author={Dohare, Shibhansh and Hernandez-Garcia, J. Fernando and Lan, Qingfeng and Rahman, Parash and Mahmood, A. Ruapm and Sutton, Richard S.},
+  journal={Nature},
+  volume={632},
+  pages={768---774},
+  year={2024},
+  publisher={Nature Publishing Group UK London}
+}
+```
+
 
 ## Repository Contents
 - [lop/algos](./lop/algos): All the algorithms used in the paper, including our new continual backpropagation algorithm.
