@@ -29,7 +29,7 @@ With this in mind, you can run the experiment for the base deep learning system 
 command. A single run with the base deep-learning system takes about 6 hours on an A-100 GPU.
 
 ```sh
-python3.8 incremental_cifar_experiment.py --config ./cfg/base_deep_learning_system.json ---verbose \
+python3.8 incremental_cifar_experiment.py --config ./cfg/base_deep_learning_system.json --verbose \
 --experiment-index 0
 ```
 
