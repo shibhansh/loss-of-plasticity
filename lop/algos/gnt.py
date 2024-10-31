@@ -211,7 +211,7 @@ class GnT(object):
         if self.opt_type == 'adam':
             for i in range(self.num_hidden_layers):
                 # input weights
-                if num_features_to_replace == 0:
+                if num_features_to_replace[i] == 0:
                     continue
                 self.opt.state[self.net[i * 2].weight]['exp_avg'][features_to_replace[i], :] = 0.0
                 self.opt.state[self.net[i * 2].bias]['exp_avg'][features_to_replace[i]] = 0.0
