@@ -8,7 +8,7 @@ The following command can be used to perform one run for this configuration file
 A single run (for 50M time-steps) on a normal laptop takes about 24 CPU-hours.
 
 ```sh
-python3.8 run_ppo.py -c cfg/ant/std.json -s 0
+python3.8 run_ppo.py -c cfg/ant/std.yml -s 0
 ```
 
 Configuration files in [`cfg/ant/ns.yml`](cfg/ant/ns.yml), [`cfg/ant/l2.yml`](cfg/ant/l2.yml), and [`cfg/ant/cbp.yml`](cfg/ant/cbp.yml)specify the parameters for
