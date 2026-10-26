@@ -1,7 +1,7 @@
 # Loss of Plasticity in Continual ImageNet
 This directory contains the implementation of the continual binary ImageNet classification problem.
 
-The first step to replicate the results is to download the data. The data can be downloaded [here](https://drive.google.com/file/d/1i0ok3LT5_mYmFWaN7wlkpHsitUngGJ8z/view?usp=sharing).
+The first step to replicate the results is to download the data. The data can be downloaded [here]([https://drive.google.com/file/d/1i0ok3LT5_mYmFWaN7wlkpHsitUngGJ8z/view?usp=sharing](https://drive.google.com/file/d/1-8pgLUKM1WBsjum_bw96PVb4veTZRykf/view?usp=drive_link)).
 Create a directory named `data` and extract the downloaded file in `data`
 ```sh
 cd lop/imagenet/
